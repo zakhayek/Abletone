@@ -1,0 +1,27 @@
+{
+  "name": "ableclone",
+  "version": "1.0.0",
+  "description": "A tiny musicbox completed in a few days.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zakhayek/ableclone.git"
+  },
+  "keywords": [
+    "drum",
+    "machine",
+    "beats"
+  ],
+  "author": "Zak Hayek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zakhayek/ableclone/issues"
+  },
+  "homepage": "https://github.com/zakhayek/ableclone#readme",
+  "dependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
