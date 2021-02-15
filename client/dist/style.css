@@ -1,11 +1,16 @@
 body {
-  background-color: #2c353d;
+  background-color: #151a1f;
+  color: white;
 }
 
 #app {
   display: flex;
   justify-content: center;
 }
+
+/************************
+  Structure
+*************************/
 
 .container {
   display: flex;
@@ -14,14 +19,34 @@ body {
   padding: 5px;
 }
 
+.section {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+.editor {
+  background-color: #3c4955;
+  border-radius: 5px;
+  margin-right: 10px;
+  width: 250px;
+}
+
+.transport {
+  background-color: #3c4955;
+  border-radius: 5px;
+}
+
 /************************
   Synth Portion
 *************************/
 
 .sequencer {
+  background-color: #3c4955;
+  border-radius: 5px;
   display: flex;
   flex-direction: column;
-  padding: 0 10px;
+  padding: 5px;
 }
 
 .synth_row {

@@ -10,7 +10,6 @@ class Controls extends React.Component {
   }
 
   start() {
-    // const bitcrush = new Tone.Distortion(0.9).toDestination()
     const lowPass = new Tone.Filter({
       frequency: 8000,
     }).toDestination();
