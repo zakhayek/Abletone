@@ -7,86 +7,47 @@ body {
   justify-content: center;
 }
 
-.container, .leftCol, .rightCol, .step, .editor, .controls {
+.container {
+  display: flex;
+  flex-direction: column;
   border-radius: 5px;
   padding: 5px;
 }
 
-.container {
+/************************
+  Synth Portion
+*************************/
+
+.sequencer {
   display: flex;
-  flex-direction: row;
-  height: 800px;
-}
-
-.leftCol {
-  background-color: #3d4a57;
-  width: 300px;
-  margin: 10px;
-}
-
-.rightCol {
-  background-color: #3d4a57;
   flex-direction: column;
-  width: 800px;
-  margin: 10px;
-  align-items: stretch;
+  padding: 0 10px;
 }
 
-.step {
+.synth_row {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin: 10px;
-  background-color: #546678;
-  height: 80px;
-}
 
-.editor {
-  margin: 10px;
-  background-color: #546678;
-  height: inherit;
-}
-
-.controls {
-  margin: 10px;
-  background-color: #546678;
-  height: inherit;
 }
 
 /************************
   Step Sequencer Buttons
 *************************/
 
-.s0_off, .s0_on, .s1_off, .s1_on, .s2_off, .s2_on, .s3_off, .s3_on {
+.step_off, .step_on {
   border: none;
   outline: none;
   text-align: center;
-  margin: 0 5px;
-  height: 80px;
-  width: 40px;
+  margin: 3px;
+  height: 20px;
+  width: 20px;
   border-radius: 3px;
-  font-size: 40px;
-  font-weight: bold;
 }
 
-.s0_off, .s2_off {
-  background-color: #464646;
-  color: #5c3700;
+.step_off {
+  background-color: grey;
 }
 
-.s0_on, .s2_on {
-  background-color: #afafaf;
-  color: #ffb951;
-  text-shadow: 0 0 5px #ffe4bc;
-}
-
-.s1_off, .s3_off {
-  background-color: #2b4d40;
-  color: #5c3700;
-}
-
-.s1_on, .s3_on {
-  background-color: #57a386;
-  color: #ffb951;
+.step_on {
+  background-color: white;
 }
 

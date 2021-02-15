@@ -1,8 +1,8 @@
 import React from 'react';
-import Channels from './Channels';
-import Sequencer from './Sequencer';
-import Editor from './Editor';
-import Controls from './Controls';
+import SynthEdit from './SynthEdit';
+import SynthSeq from './SynthSeq';
+import DrumEdit from './DrumEdit';
+import DrumSeq from './DrumSeq';
 
 class App extends React.Component {
   constructor(props) {
@@ -13,18 +13,21 @@ class App extends React.Component {
   render() {
     return (
       <div className="container">
-        <div className="leftCol">
-          <Channels />
-        </div>
-        <div className="rightCol">
-          {/* <div className="step">
-            <Sequencer />
+        <div className="synth_section">
+          <div className="synth_editor">
+            {/* <SynthEdit /> */}
           </div>
-          <div className="editor">
-            <Editor />
-          </div> */}
-          <div className="controls">
-            <Controls />
+          <div className="sequencer">
+            <SynthSeq />
+          </div>
+        </div>
+
+        <div className="drum_section">
+          <div className="drum_editor">
+            {/* <DrumEdit /> */}
+          </div>
+          <div className="sequencer">
+            <DrumSeq />
           </div>
         </div>
       </div>
