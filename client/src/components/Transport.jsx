@@ -4,11 +4,17 @@ import * as Tone from 'tone';
 class Transport extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      loadName: '',
+      saveName: '',
+    };
     this.synthEngine = this.synthEngine.bind(this);
     this.drumEngine = this.drumEngine.bind(this);
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.save = this.save.bind(this);
+    this.load = this.load.bind(this);
   }
 
   synthEngine() {
@@ -72,7 +78,7 @@ class Transport extends React.Component {
       steps.push(seq);
     }
     const hhOpen = new Tone.NoiseSynth({
-      volume: 0.8,
+      volume: this.props.drumParams.hhOpenVol,
       noise : {
         type : 'white'
       },
@@ -83,6 +89,7 @@ class Transport extends React.Component {
       },
     }).toDestination();
     const hhClosed = new Tone.NoiseSynth({
+      volume: this.props.drumParams.hhClosedVol,
       noise : {
         type : 'white'
       },
@@ -93,7 +100,7 @@ class Transport extends React.Component {
       },
     }).toDestination();
     const snare = new Tone.NoiseSynth({
-      volume: 8,
+      volume: this.props.drumParams.snareVol,
       noise : {
         type : 'white'
       },
@@ -104,7 +111,7 @@ class Transport extends React.Component {
       },
     }).connect(lowPass);
     const kick = new Tone.MembraneSynth({
-      volume: 8,
+      volume: this.props.drumParams.kickVol,
     }).toDestination();
 
     const hhOpenSeq = new Tone.Sequence(
@@ -155,11 +162,48 @@ class Transport extends React.Component {
     Tone.Transport.stop();
   }
 
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.setState({ [name]: value })
+  }
+
+  save(e) {
+    e.preventDefault();
+    this.props.save(this.state.saveName)
+  }
+
+  load(e) {
+    e.preventDefault();
+    this.props.load(this.state.loadName);
+  }
+
   render() {
     return (
       <div>
+      <div>
         <button onClick={this.start}>Start</button>
         <button onClick={this.stop}>Stop</button>
+        {/* <button>Save</button>
+        <button onClick={this.props.load}>Load</button> */}
+      </div>
+      <div>
+        <form>
+          <label>
+            Save Pattern: 
+            <input type="text" name="saveName" value={this.state.saveName} onChange={this.handleChange} />
+          </label>
+          <input type="submit" onClick={this.save} />
+        </form>
+      </div>
+      <div>
+        <form>
+          <label>
+            Load Pattern: 
+            <input type="text" name="loadName" value={this.state.loadName} onChange={this.handleChange} />
+          </label>
+          <input type="submit" onClick={this.load} />
+        </form>
+      </div>
       </div>
     )
   }

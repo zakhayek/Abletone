@@ -13,6 +13,7 @@ const patternSchema = new mongoose.Schema({
   synthSeq: Schema.Types.Mixed,
   drumSeq: Schema.Types.Mixed,
   synthParams: Schema.Types.Mixed,
+  drumParams: Schema.Types.Mixed,
 });
 
 const Pattern = mongoose.model('Pattern', patternSchema);
