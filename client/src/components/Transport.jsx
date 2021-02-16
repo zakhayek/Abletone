@@ -30,7 +30,7 @@ class Transport extends React.Component {
     }
     const synth = new Tone.PolySynth(Tone.Synth, {
       oscillator: {
-        type: "sine",
+        type: this.props.synthParams.waveform,
       },
     }).toDestination();
     const synthSeq = new Tone.Sequence(
@@ -44,10 +44,12 @@ class Transport extends React.Component {
   }
 
   drumEngine() {
+    const lowPass = new Tone.Filter({
+      frequency: 5000,
+    }).toDestination();
     const notes = ['C5', 'C5', 'C2', 'C1'];
     const steps = [];
     const sequence = this.props.drumSeq;
-    console.log(sequence);
     for (let kit = 0; kit < sequence.length; kit++) {
       let seq = [];
       for (let hit = 0; hit < sequence[kit].length; hit++) {
@@ -59,9 +61,29 @@ class Transport extends React.Component {
       }
       steps.push(seq);
     }
-    const hhOpen = new Tone.NoiseSynth().toDestination();
-    const hhClosed = new Tone.NoiseSynth().toDestination();
+    const hhOpen = new Tone.NoiseSynth({
+      volume: 0.8,
+      noise : {
+        type : 'white'
+      },
+      envelope : {
+        attack : 0.005 ,
+        decay : 0.3,
+        sustain : 0
+      },
+    }).toDestination();
+    const hhClosed = new Tone.NoiseSynth({
+      noise : {
+        type : 'white'
+      },
+      envelope : {
+        attack : 0.005 ,
+        decay : 0.05,
+        sustain : 0
+      },
+    }).toDestination();
     const snare = new Tone.NoiseSynth({
+      volume: 8,
       noise : {
         type : 'white'
       },
@@ -70,7 +92,7 @@ class Transport extends React.Component {
         decay : 0.2,
         sustain : 0
       },
-    }).toDestination();
+    }).connect(lowPass);
     const kick = new Tone.MembraneSynth().toDestination();
 
     const hhOpenSeq = new Tone.Sequence(
@@ -87,6 +109,7 @@ class Transport extends React.Component {
       steps[1],
       '16n'
     );
+    
     const snareSeq = new Tone.Sequence(
       function(time) {
         snare.triggerAttackRelease('4n', time);
@@ -109,9 +132,9 @@ class Transport extends React.Component {
     Tone.Transport.cancel();
     const synthSeq = this.synthEngine();
     const drumSeq = this.drumEngine();
-    Tone.Transport.set(synthSeq.start());
+    synthSeq.start(0);
     for (let i = 0; i < drumSeq.length; i++) {
-      Tone.Transport.set(drumSeq[i].start());
+      drumSeq[i].start(0);
     }
     Tone.Transport.start();
   }

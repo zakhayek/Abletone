@@ -33,8 +33,12 @@ class App extends React.Component {
         [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
         [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
       ],
+      synthParams: {
+        waveform: 'sawtooth',
+      }
     };
     this.setStep = this.setStep.bind(this);
+    this.setParams = this.setParams.bind(this);
   }
 
   setStep(synthSeq, drumSeq) {
@@ -45,12 +49,16 @@ class App extends React.Component {
     }
   }
 
+  setParams(param) {
+    this.setState({ synthParams: param });
+  }
+
   render() {
     return (
       <div className="container">
         <div className="section">
           <div className="editor">
-            <SynthEdit />
+            <SynthEdit setParams={this.setParams}/>
           </div>
           <div className="sequencer">
             <SynthSeq synthSeq={this.state.synthSeq} setStep={this.setStep} />
@@ -66,7 +74,7 @@ class App extends React.Component {
           </div>
         </div>
         <div className="transport">
-          <Transport synthSeq={this.state.synthSeq} drumSeq={this.state.drumSeq} />
+          <Transport synthParams={this.state.synthParams} synthSeq={this.state.synthSeq} drumSeq={this.state.drumSeq} />
         </div>
       </div>
     )

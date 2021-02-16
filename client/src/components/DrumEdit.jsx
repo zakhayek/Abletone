@@ -8,7 +8,7 @@ class DrumEdit extends React.Component {
 
   render() {
     return (
-      <div>Drum Editor.</div>
+      <div></div>
     )
   }
 }

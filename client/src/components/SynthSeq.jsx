@@ -1,5 +1,4 @@
 import React from 'react';
-import * as Tone from 'tone';
 
 class SynthSeq extends React.Component {
   constructor(props) {
@@ -11,7 +10,6 @@ class SynthSeq extends React.Component {
   stepSwitch(col, row) {
     let sequence = this.props.synthSeq;
     sequence[col][row] = !sequence[col][row];
-    console.log(sequence[col][row]);
     this.props.setStep(sequence);
   }
 
@@ -20,7 +18,7 @@ class SynthSeq extends React.Component {
       this.props.synthSeq.map((division, x) => (
         <div className="synth_row">
           {division.map((state, y) => (
-            <button className={state ? `step_on` : `step_off`} key={x,y} name={`${x}${y}`} onClick={() => this.stepSwitch(x, y)}></button>
+            <button className={state ? `step_on` : `step_off`} key={x,y} name={`${x}${y}`} onMouseDown={() => this.stepSwitch(x, y)} ></button>
           ))}
         </div>
       ))
