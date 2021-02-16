@@ -1,5 +1,4 @@
 import React from 'react';
-import * as Tone from 'tone';
 
 class DrumSeq extends React.Component {
   constructor(props) {
@@ -17,7 +16,7 @@ class DrumSeq extends React.Component {
   render() {
     return (
       this.props.drumSeq.map((division, x) => (
-        <div className="drum_row">
+        <div>
           {division.map((state, y) => (
             <button className={state ? `step_on` : `step_off`} key={x,y} name={`${x}${y}`} onClick={() => this.stepSwitch(x, y)}></button>
           ))}

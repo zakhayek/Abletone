@@ -16,7 +16,7 @@ class SynthSeq extends React.Component {
   render() {
     return (
       this.props.synthSeq.map((division, x) => (
-        <div className="synth_row">
+        <div>
           {division.map((state, y) => (
             <button className={state ? `step_on` : `step_off`} key={x,y} name={`${x}${y}`} onMouseDown={() => this.stepSwitch(x, y)} ></button>
           ))}

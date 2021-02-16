@@ -1,6 +1,7 @@
 body {
   background-color: #151a1f;
   color: white;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 #app {
@@ -38,7 +39,7 @@ body {
 }
 
 /************************
-  Synth Portion
+  Sequencer
 *************************/
 
 .sequencer {
@@ -48,15 +49,6 @@ body {
   flex-direction: column;
   padding: 5px;
 }
-
-.synth_row {
-  display: flex;
-
-}
-
-/************************
-  Step Sequencer Buttons
-*************************/
 
 .step_off, .step_on {
   border: none;
@@ -96,4 +88,41 @@ body {
   display: grid;
   grid-row-gap: 6px;
   padding: 0px 3px;
+}
+
+/************************
+  Transport
+*************************/
+
+.transport {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bpm {
+  display: grid;
+  align-items: center;
+  margin-bottom: 10px;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+  align-items: center;
+}
+
+.bpm_readout {
+}
+
+.start_stop {
+  display: flex;
+  margin: 10px;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.transport_btn {
+  border: none;
+  outline: none;
+  margin: 0px 5px;
 }

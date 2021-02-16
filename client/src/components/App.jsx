@@ -10,85 +10,105 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      synthSeq: [
-        [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
-        [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
-        [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
-        [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
-        [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
-        [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
-        [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
-        [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
-        [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
-        [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
-        [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
-        [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
-        [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
-        [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
-        [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
-        [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
-      ],
-      drumSeq: [
-        [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
-        [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
-        [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
-        [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
-      ],
-      synthParams: {
-        waveform: 'sawtooth',
-        attack: 0.005,
-        decay: 0.1,
-        sustain: 0.3,
-        release: 1
+      current: {
+        synthSeq: [
+          [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
+          [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
+          [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
+          [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
+          [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
+          [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
+          [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
+          [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
+          [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
+          [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
+          [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
+          [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
+          [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
+          [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
+          [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
+          [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
+        ],
+        drumSeq: [
+          [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
+          [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
+          [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
+          [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
+        ],
+        synthParams: {
+          waveform: 'sawtooth',
+          attack: 0.005,
+          decay: 0.1,
+          sustain: 0.3,
+          release: 1
+        },
+        drumParams: {
+          hhOpenVol: 0.8,
+          hhClosedVol: 1,
+          snareVol: 8,
+          kickVol: 8,
+        }
       },
-      drumParams: {
-        hhOpenVol: 0.8,
-        hhClosedVol: 1,
-        snareVol: 8,
-        kickVol: 8,
-      }
+      patterns: [],
     };
     this.setStep = this.setStep.bind(this);
     this.setSynthParams = this.setSynthParams.bind(this);
     this.setDrumParams = this.setDrumParams.bind(this);
     this.savePattern = this.savePattern.bind(this);
     this.getPattern = this.getPattern.bind(this);
+    this.getAllPatterns = this.getAllPatterns.bind(this);
+  }
+
+  componentDidMount() {
+    this.getAllPatterns();
   }
 
   setStep(synthSeq, drumSeq) {
+    const { current } = this.state;
     if (synthSeq) {
-      this.setState({ synthSeq });
+      current.synthSeq = synthSeq;
+      this.setState({ current });
     } else {
-      this.setState({ drumSeq });
+      current.drumSeq = drumSeq;
+      this.setState({ current });
     }
   }
 
   setSynthParams(param, value) {
-    let synthParams = this.state.synthParams;
-    synthParams[param] = value;
-    this.setState({ synthParams });
+    let { current } = this.state;
+    current.synthParams[param] = value;
+    this.setState({ current });
   }
 
   setDrumParams(param, value) {
-    let drumParams = this.state.drumParams;
-    drumParams[param] = value;
-    this.setState({ drumParams });
+    let { current } = this.state;
+    current.drumParams[param] = value;
+    this.setState({ current });
   }
 
   getPattern(name) {
     axios.get(`/api/patterns/${name}`)
       .then((res) => {
-        const { synthSeq, drumSeq, synthParams } = res.data[0];
-        this.setState({ synthSeq, drumSeq, synthParams });
+        const { synthSeq, drumSeq, synthParams, drumParams } = res.data[0];
+        const current = { synthSeq, drumSeq, synthParams, drumParams }
+        this.setState({ current });
       })
       .catch((err) => console.log(err));
   }
 
   savePattern(name) {
-    const pattern = this.state;
+    const pattern = this.state.current;
     pattern.name = name;
     axios.post('/api/patterns', pattern)
-      .then(console.log('Posted.'))
+      .then(this.getAllPatterns())
+      .catch((err) => console.log(err));
+  }
+
+  getAllPatterns() {
+    axios.get('/api/patterns')
+      .then((res) => {
+        this.setState({ patterns: res.data });
+      })
       .catch((err) => console.log(err));
   }
 
@@ -97,29 +117,30 @@ class App extends React.Component {
       <div className="container">
         <div className="section">
           <div className="editor">
-            <SynthEdit setSynthParams={this.setSynthParams}/>
+            <SynthEdit synthParams={this.state.current.synthParams} setSynthParams={this.setSynthParams}/>
           </div>
           <div className="sequencer">
-            <SynthSeq synthSeq={this.state.synthSeq} setStep={this.setStep} />
+            <SynthSeq synthSeq={this.state.current.synthSeq} setStep={this.setStep} />
           </div>
         </div>
 
         <div className="section">
           <div className="editor">
-            <DrumEdit setDrumParams={this.setDrumParams} />
+            <DrumEdit drumParams={this.state.current.drumParams} setDrumParams={this.setDrumParams} />
           </div>
           <div className="sequencer">
-            <DrumSeq drumSeq={this.state.drumSeq} setStep={this.setStep} />
+            <DrumSeq drumSeq={this.state.current.drumSeq} setStep={this.setStep} />
           </div>
         </div>
         <div className="transport">
           <Transport 
-            drumParams={this.state.drumParams}
-            synthParams={this.state.synthParams}
-            synthSeq={this.state.synthSeq}
-            drumSeq={this.state.drumSeq}
+            drumParams={this.state.current.drumParams}
+            synthParams={this.state.current.synthParams}
+            synthSeq={this.state.current.synthSeq}
+            drumSeq={this.state.current.drumSeq}
             save={this.savePattern}
             load={this.getPattern}
+            patterns={this.state.patterns}
           />
         </div>
       </div>

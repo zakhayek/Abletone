@@ -12,17 +12,28 @@ app.get('/api/patterns/:name', (req, res) => {
   Pattern.find({
     "name": name
   })
+    .then((data) => res.send(data))
+    .catch((err) => res.send(err));
+})
+
+app.get('/api/patterns', (req, res) => {
+  Pattern.find({})
     .then((data) => {
-      res.send(data);
+      const patterns = [];
+      for (let i = 0; i < data.length; i++) {
+        patterns.push(data[i].name);
+      }
+      res.send(patterns);
     })
-    .catch((err) => {
-      res.send(err);
-    });
+    .catch((err) => res.send(err))
 })
 
 app.post('/api/patterns/', (req, res) => {
   const pattern = req.body;
-  Pattern.create(pattern)
+  const name = { "name": pattern.name };
+  Pattern.findOneAndUpdate(name, pattern, {
+    upsert: true,
+  })
     .then(res.send(200))
     .catch((err) => res.send(err));
 })

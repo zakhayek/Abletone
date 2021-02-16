@@ -7,6 +7,7 @@ class Transport extends React.Component {
     this.state = {
       loadName: '',
       saveName: '',
+      bpm: 120,
     };
     this.synthEngine = this.synthEngine.bind(this);
     this.drumEngine = this.drumEngine.bind(this);
@@ -149,6 +150,7 @@ class Transport extends React.Component {
   
   start() {
     Tone.Transport.cancel();
+    Tone.Transport.bpm.value = this.state.bpm;
     const synthSeq = this.synthEngine();
     const drumSeq = this.drumEngine();
     synthSeq.start(0);
@@ -170,40 +172,46 @@ class Transport extends React.Component {
   save(e) {
     e.preventDefault();
     this.props.save(this.state.saveName)
+    this.setState({ saveName: '' })
   }
 
   load(e) {
     e.preventDefault();
-    this.props.load(this.state.loadName);
+    this.props.load(e.target.value);
   }
 
   render() {
     return (
-      <div>
-      <div>
-        <button onClick={this.start}>Start</button>
-        <button onClick={this.stop}>Stop</button>
-        {/* <button>Save</button>
-        <button onClick={this.props.load}>Load</button> */}
-      </div>
-      <div>
-        <form>
-          <label>
-            Save Pattern: 
-            <input type="text" name="saveName" value={this.state.saveName} onChange={this.handleChange} />
-          </label>
-          <input type="submit" onClick={this.save} />
-        </form>
-      </div>
-      <div>
-        <form>
-          <label>
-            Load Pattern: 
-            <input type="text" name="loadName" value={this.state.loadName} onChange={this.handleChange} />
-          </label>
-          <input type="submit" onClick={this.load} />
-        </form>
-      </div>
+      <div className="transport_ctrls">
+        <div className="start_stop">
+          <button className="transport_btn" onClick={this.start}>▷</button>
+          <button className="transport_btn" onClick={this.stop}>▢</button>
+        </div>
+        <div className="bpm">
+          <div className="bpm_readout">
+            BPM: {this.state.bpm}
+          </div>
+          <input type="range" name="bpm" min="60" max="220" value={this.state.bpm} step="1" onChange={this.handleChange}></input>
+        </div>
+        <div className="save_load">
+          <form>
+            <label>
+              Save Pattern: 
+              <input type="text" name="saveName" value={this.state.saveName} onChange={this.handleChange} />
+            </label>
+            <input type="submit" onClick={this.save} />
+          </form>
+          <form>
+            <label>
+              Load Pattern: 
+              <select name="pattern" value={this.state.waveform} onChange={this.load}>
+                {this.props.patterns.map((pattern, key) => (
+                  <option value={pattern} key={key}>{pattern}</option>
+                ))}
+              </select>
+            </label>
+          </form>
+        </div>
       </div>
     )
   }
