@@ -35,7 +35,11 @@ class App extends React.Component {
       ],
       synthParams: {
         waveform: 'sawtooth',
-      }
+        attack: 0.005,
+        decay: 0.1,
+        sustain: 0.3,
+        release: 1
+      },
     };
     this.setStep = this.setStep.bind(this);
     this.setParams = this.setParams.bind(this);
@@ -49,8 +53,10 @@ class App extends React.Component {
     }
   }
 
-  setParams(param) {
-    this.setState({ synthParams: param });
+  setParams(param, value) {
+    let synthParams = this.state.synthParams;
+    synthParams[param] = value;
+    this.setState({ synthParams });
   }
 
   render() {

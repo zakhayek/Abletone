@@ -24,7 +24,8 @@ class Transport extends React.Component {
       }
       if (chord.length > 0) {
         steps.push(chord);
-      } else {
+      } 
+      else {
         steps.push(null);
       }
     }
@@ -32,10 +33,19 @@ class Transport extends React.Component {
       oscillator: {
         type: this.props.synthParams.waveform,
       },
+      envelope: {
+        attack: this.props.synthParams.attack,
+        decay: this.props.synthParams.decay,
+        sustain: this.props.synthParams.sustain,
+        release: this.props.synthParams.release,
+        attackCurve: 'exponential',
+        decayCurve: 'exponential',
+        releaseCurve: 'exponential'
+      }
     }).toDestination();
     const synthSeq = new Tone.Sequence(
       function(time, note) {
-        synth.triggerAttackRelease(note, .1, time);
+        synth.triggerAttackRelease(note, .01, time);
       },
       steps,
       "16n"
@@ -93,7 +103,9 @@ class Transport extends React.Component {
         sustain : 0
       },
     }).connect(lowPass);
-    const kick = new Tone.MembraneSynth().toDestination();
+    const kick = new Tone.MembraneSynth({
+      volume: 8,
+    }).toDestination();
 
     const hhOpenSeq = new Tone.Sequence(
       function(time) {
